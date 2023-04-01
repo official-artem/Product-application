@@ -19,7 +19,7 @@ const Data: FC = () => {
     month: "short",
     year: "numeric",
   };
-  const formattedDate = new Intl.DateTimeFormat('ru-RU', options).format(date);
+  const formattedDate = new Intl.DateTimeFormat('en-EN', options).format(date);
 
   const datOfWeek = formattedDate.split(' ')[0].slice(0, -1);
   const day = formattedDate.split(' ')[1];

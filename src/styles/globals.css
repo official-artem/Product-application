@@ -12,10 +12,11 @@ body {
 body {
   color: black;
   height: 100vh;
-  
 }
 
-a {
+
+
+body a {
   text-decoration: none;
   color: inherit;
 }
