@@ -1,21 +1,29 @@
-import { useRouter } from 'next/router';
-import { FC, PropsWithChildren } from 'react'
-import AsideBarPage from '../asideBar/AsideBar';
+import { FC, PropsWithChildren, memo } from 'react';
 import Header from '../header/Header';
+import NavigationMenu from '../navigationMenu/NavigationMenu';
+import styles from './layout.module.css';
+import Head from 'next/head';
+import Meta from '../meta/Meta';
 
-const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
-
-  return (
-    <div>
-      <Header />
-      <main className='d-flex'>
-      <AsideBarPage />
-        <div className='w-100 p-5'>
-          { children }
-        </div>
-      </main>
-    </div>
-  )
+interface Props {
+  title: string;
 }
+
+const Layout: FC<PropsWithChildren<Props>> = memo(
+  ({ children, title }) => {
+
+    return (
+      <Meta title={title}>
+        <Header />
+        <main className='d-flex'>
+          <NavigationMenu />
+          <div className={`w-100 p-5 ${styles.content}`}>
+            { children }
+          </div>
+        </main>
+      </Meta>
+    )
+  },
+);
 
 export default Layout

@@ -3,6 +3,7 @@
 }
 
 p,
+h6,
 div,
 body {
   margin: 0;
@@ -12,9 +13,16 @@ body {
 body {
   color: black;
   height: 100vh;
+  overflow-x: hidden;
 }
 
+.header {
+  min-height: 10vh;
+}
 
+main {
+  height: 90vh;
+}
 
 body a {
   text-decoration: none;

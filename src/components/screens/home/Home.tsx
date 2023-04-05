@@ -1,15 +1,13 @@
-import AsideBarPage from '@/components/asideBar/AsideBar';
 import Layout from '@/components/layout/Layout';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
-const Home: FC = () => {
-  return (
-    <div className='h-100'>
-      <Layout>
-        
+const Home: FC =  memo(
+  () => {
+    return (
+      <Layout title='Home'>
       </Layout>
-    </div>
-  )
-}
+    )
+  },
+);
 
 export default Home

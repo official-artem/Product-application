@@ -4,19 +4,21 @@ import moment from 'moment';
 import Image from 'next/image';
 import { Product } from '@/types/product';
 import styles from './orderItem.module.css';
-import 'animate.css';
+import cn from 'classnames';
 
 interface Props {
   order: Order;
-  handleOrderDelete: (orderId: number) => void;
-  hadnleSelectProducts: (orderId: number) => void;
+  isSelectOrder: number | null
+  handleDeleteOrder: (orderId: number) => void;
+  handleSelectProducts: (orderId: number) => void;
 }
 
 const order: FC<Props> = memo(
   ({ 
-    order, 
-    handleOrderDelete,
-    hadnleSelectProducts,
+    order,
+    isSelectOrder,
+    handleDeleteOrder,
+    handleSelectProducts,
   }) => {
     const [isDeleted, setDeleted] = useState(false);
     const date = order.date;
@@ -26,7 +28,7 @@ const order: FC<Props> = memo(
   
     const getSum = (products: Product[]) => {
       let sumOfUSD = 0;
-      let sumofUAH = 0;
+      let sumOfUAH = 0;
   
       products.forEach(product => {
         const { price } = product;
@@ -35,18 +37,21 @@ const order: FC<Props> = memo(
           switch (value.symbol) {
             case 'USD':
               sumOfUSD += value.value;
+              break;
+
             case 'UAH':
-              sumofUAH += value.value;
+              sumOfUAH += value.value;
+              break;
   
             default:
               break;
           }
         })
-      })
+      });
   
       return {
         USD: sumOfUSD,
-        UAH: sumofUAH,
+        UAH: sumOfUAH,
       };
     };
 
@@ -54,8 +59,8 @@ const order: FC<Props> = memo(
       setDeleted(true);
 
       setTimeout(() => {
-        handleOrderDelete(order.id)
-      }, 700)
+        handleDeleteOrder(order.id)
+      }, 500)
     }
 
     const animateClass = isDeleted 
@@ -63,27 +68,44 @@ const order: FC<Props> = memo(
       : 'animate__bounceInRight';
   
     const { USD, UAH } = getSum(order.products)
+
+    const flexContent = isSelectOrder 
+      ? 'justify-content-around' 
+      : 'justify-content-between';
+    const DEFAULT_CONTAINER_STYLES = `border d-flex align-items-center ${flexContent} px-4 py-1 animate__animated animate__fast bg-white rounded`;
+
   
     return (
       <div 
-        className={
-          `border d-flex align-items-center justify-content-between px-4 py-1 my-2 animate__animated animate__fast ${animateClass}`}
+        className={cn(
+          DEFAULT_CONTAINER_STYLES, 
+          animateClass, 
+          { [styles.selectedOrder]: isSelectOrder  === order.id},
+          { [styles.arrow_icon]: isSelectOrder },
+          { 'pe-5': isSelectOrder },
+        )}
       >
-        <p className='fs-5'>{order.title}</p>
+        {!isSelectOrder && <span className='fs-5'>{order.title}</span>}
         <div className='d-flex align-items-center gap-3'>
-          <div className="border rounded-circle rounded h-25 p-2 d-flex align-items-center justify-content-center">
+          <div 
+            className="border rounded-circle rounded h-25 p-2 d-flex align-items-center justify-content-center"
+            onClick={() => {
+              if (isSelectOrder !== order.id) {
+                handleSelectProducts(order.id);
+              };
+            }}
+          >
             <Image 
               className={styles.icon_button} 
-              onClick={() => hadnleSelectProducts(order.id)}
               src="/list_icon.png" 
               alt="list icon" 
               width={20} 
-              height={20} 
+              height={20}
             />
           </div>
   
           <div>
-          <h6>{order.products.length}</h6>
+          <h6 className='m0'>{order.products.length}</h6>
             Products
           </div>
         </div>
@@ -97,22 +119,26 @@ const order: FC<Props> = memo(
           </div>
         </div>
   
-        <div className='text-center '>
-          <p className='m-0'>
-            {USD} $
-          </p>
-          <p className='m-0'>{UAH} UAH</p>
-        </div>
+        {!isSelectOrder && (
+          <>
+            <div className='text-center '>
+              <p className='m-0'>
+                {USD} $
+              </p>
+              <p className='m-0'>{UAH} UAH</p>
+            </div>
   
-        <Image 
-          onClick={handleDelay}
-          className={styles.icon_button}
-          src="/trash_icon.png" 
-          width={16} 
-          height={16} 
-          alt='trash icon' 
-        />
-      </div>
+            <Image 
+              onClick={handleDelay}
+              className={styles.icon_button}
+              src="/trash_icon.png" 
+              width={16} 
+              height={16} 
+              alt='trash icon' 
+            />
+          </>
+        )}
+        </div>
     )
   },
 );

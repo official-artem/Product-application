@@ -1,0 +1,7 @@
+.orders {
+  flex-basis: 40%;
+}
+
+.add_icon {
+  cursor: pointer;
+}

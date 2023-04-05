@@ -1,0 +1,29 @@
+.dropdown {
+  cursor: pointer;
+  position: relative;
+  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+  user-select: none;
+}
+
+.dropdown_content {
+  position: absolute;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 10%;
+  top: 110%;
+  z-index: 11;
+  left: 0;
+  right: 0;
+  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+  text-transform: uppercase;
+  transition: height 0.3s ease-in-out;
+  padding: 1rem;
+}
+
+.lang {
+  margin: 10px 0;
+}
+
+.lang:hover {
+  text-decoration: underline;
+}
