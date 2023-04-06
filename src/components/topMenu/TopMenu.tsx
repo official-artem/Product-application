@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 
 const TopMenu: FC = React.memo(
@@ -11,8 +11,10 @@ const TopMenu: FC = React.memo(
     const [activeUsers, setActiveUsers] = useState(0);
 
     useEffect(() => {
-      const socket = io(`http://localhost:3000}`, { forceNew: true });
+      const socket = io(`https://${process.env.URL}:${process.env.PORT}`, { forceNew: true });
       socket.on('activeUsers', (data: any) => {
+        console.log(window.location.hostname, process.env.PORT);
+        
         setActiveUsers(data);
       });
       return () => {
