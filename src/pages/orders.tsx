@@ -2,7 +2,7 @@ import Layout from '@/components/layout/Layout';
 import { GetStaticProps, NextPage } from 'next'
 import { orders } from '@/data/data.js'
 import OrderItem from '@/components/orderItem/orderItem';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/product';
 import ProductItem from '@/components/productItem/productItem';
@@ -51,30 +51,41 @@ const incomingPage: NextPage = memo(
       });
     }
 
-    const handleAddProduct = () => {
-        setSelectedProducts((prev) => {
-          if (prev && selectedProducts) {
-            return [...prev, {
-              ...products[0],
-              id: getNewId(selectedProducts),
-            }]
-          }
+    // useEffect(() => {
+    //   console.log(ordersFromData);
+    // }, [ordersFromData])
 
-          return prev;
-        })
-    }
+    const handleAddProduct = () => {
+      setSelectedProducts((prev) => {
+        if (prev && selectedProducts) {
+          return [...prev, {
+            ...products[0],
+            id: getNewId(selectedProducts),
+          }]
+        }
+
+        return prev;
+      })
+  }
 
     const handleAddOrder = () => {
-      setOrdersFromData((prev) => [...prev, {
-        ...orders[0],
-        id: getNewId(ordersFromData),
-      }])
+      setOrdersFromData((prev) => {
+        const newId = getNewId(ordersFromData);
+
+        return [...prev, {
+          ...orders[0],
+          id: newId,
+          title: `Order ${newId}`
+        }]
+      })
     }
 
     const handleSelectProducts = (orderId: number) => {
       setSelectedProducts(() => {
-        const selectedOrder = orders.find(order => order.id === orderId);
+        const selectedOrder = ordersFromData.find(order => order.id === orderId);
 
+        console.log(selectedOrder);
+        
         if (selectedOrder) {
           setSelectOrder(selectedOrder.id)
 
@@ -89,9 +100,9 @@ const incomingPage: NextPage = memo(
   
     return (
       <Layout title='Orders'>
-        <h2 className="mb-4">
+        <h3 className="mb-4 align-items-center d-flex">
           <Image 
-            className='me-3' 
+            className={`me-3 ${styles.add_icon_orders}`}
             alt='plus button' 
             src="/plus_icon.png" 
             width={45} 
@@ -99,7 +110,7 @@ const incomingPage: NextPage = memo(
             onClick={handleAddOrder}
           />
             {`${translate('orders:title')} / ${orders.length}`}
-        </h2>
+        </h3>
           <div className={cn({ 'd-flex gap-3': selectedProducts})}>
             <div className={cn('d-flex flex-column gap-3', { [styles.orders]: isSelectOrder})}>
               {ordersFromData.map(order => (
@@ -113,7 +124,17 @@ const incomingPage: NextPage = memo(
               ))}
             </div>
               {selectedProducts && (
-                <div className="d-flex flex-column gap-3 w-50 bg-white p-4 rounded">
+                <div className={`${styles.products} d-flex products flex-column gap-3 w-50 bg-white p-4 rounded`}>
+                  <div 
+                    className={`rounded-circle position-absolute end-0 top-0 ${styles.close_button}`}
+                    onClick={() => {
+                      setSelectedProducts(null)
+                      setSelectOrder(null)
+                    }}
+                  >
+                    <Image src="/close_icon.png" width={15} height={15} alt='close icon' />
+                  </div>
+
                   <h2>{seletedOrderTitle}</h2>
 
                   <div className='align-bottom'>
@@ -122,7 +143,7 @@ const incomingPage: NextPage = memo(
                       width={20} 
                       height={20} 
                       alt='plus icon' 
-                      className={`me-2 ${styles.add_icon}`} 
+                      className={`me-2 ${styles.add_icon_products}`} 
                       onClick={handleAddProduct}
                     />
                     {translate('orders:addProduct')}
@@ -133,6 +154,7 @@ const incomingPage: NextPage = memo(
                         product={product}
                         isSelectOrder={isSelectOrder}
                         handleDeleteProduct={handleDeleteProduct}
+                        ordertitle={seletedOrderTitle}
                       />
                     ))}
                 </div>

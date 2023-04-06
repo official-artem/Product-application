@@ -10,3 +10,14 @@
 .input_container {
   width: 100%;
 }
+
+@media (max-width: 1000px) {
+  .bar {
+    display: none;
+  }
+ }
+
+ .header {
+  position: relative;
+  z-index: 20;
+ }

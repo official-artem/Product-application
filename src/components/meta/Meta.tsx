@@ -9,7 +9,7 @@ const Meta: FC<PropsWithChildren<Props>> = ({ title, children }) => {
   return (
     <>
       <Head>
-      <title>{title} | Application</title>
+        <title>{title} | Application</title>
       </Head>
 
       {children}

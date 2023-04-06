@@ -1,5 +1,6 @@
 .content {
   background-color: #FCFCFC;
-  position: relative;
-  z-index: 10;
+  padding: 3% 7%;
+  /* position: relative; */
+  /* z-index: 101; */
 }

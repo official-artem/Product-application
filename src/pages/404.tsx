@@ -4,20 +4,22 @@ import Image from 'next/image';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { memo } from 'react';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps: GetStaticProps = async ({ locale = 'en' }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['menu', 'header'])),
+    ...(await serverSideTranslations(locale, ['menu', 'header', 'inDevelopment'])),
   },
 });
 
 const NotFound: NextPage = memo(
   () => {
+    const { t: translate } = useTranslation();
     return (
       <Layout title='Page not found'>
         <div className='d-flex align-items-center flex-column'>
           <Image src="/in_development.png" width={400} height={400} alt="in development logo" className='mb-5' />
-          <h1>In development</h1>
+          <h1>{translate('inDevelopment:title')}</h1>
         </div>
       </Layout>
     )

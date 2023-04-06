@@ -1,13 +1,24 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 
 
-const Data: FC = React.memo(
+const TopMenu: FC = React.memo(
   () => {
     const [date, setDate] = useState(new Date());
     const { locale } = useRouter();
+    const [activeUsers, setActiveUsers] = useState(0);
+
+    useEffect(() => {
+      const socket = io(`http://localhost:3000}`, { forceNew: true });
+      socket.on('activeUsers', (data: any) => {
+        setActiveUsers(data);
+      });
+      return () => {
+        socket.disconnect();
+      };
+    }, []);
   
     useEffect(() => {
       const interval = setInterval(() => {
@@ -42,8 +53,10 @@ const Data: FC = React.memo(
         <div className='d-flex gap-5'>
           <span>{`${day} ${capitalize(month)}, ${year}`}</span>
           <div>
-            <Image className='me-2' src='/clock_icon.png' width={16} height={16} alt="clock_icon" />
+            <Image className='me-2' src="/clock_icon.png" width={16} height={16} alt="clock_icon" />
             <span>{`${date.toLocaleTimeString().slice(0, -3)}`}</span>
+
+            <div>Active users: {activeUsers}</div>
           </div>
         </div>
       </div>
@@ -51,4 +64,4 @@ const Data: FC = React.memo(
   },
 );
 
-export default Data
+export default TopMenu;

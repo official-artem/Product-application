@@ -14,10 +14,10 @@ const NavigationMenu: NextPage = memo(
   
     const { t: translate } = useTranslation();
   
-    return <div className={`${styles.aside_container} w-25 text-center pt-4 border-end h-auto`}>
-      <Image className='m-4' alt='user-image' src='/user.svg' width={50} height={50} />
+    return <div className={`${styles.aside_container} text-center pt-4 border-end h-auto`}>
+      <Image className='mb-5' alt='user-image' src='/user.svg' width={75} height={75} />
   
-      <nav className='d-flex flex-column gap-3 fs-5 align-items-center'>
+      <nav className='d-flex flex-column gap-3 fs-6 align-items-center'>
         <Link
           className={cn('animate__animated animate__fadeInUp',
             {

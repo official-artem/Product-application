@@ -14,5 +14,8 @@
 }
 
 .aside_container {
+  width: 11%;
+  position: relative;
+  z-index: 20;
   box-shadow: 13px 4px 13px -6px rgba(0,0,0,0.38);
 }

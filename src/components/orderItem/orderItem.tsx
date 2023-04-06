@@ -72,71 +72,76 @@ const order: FC<Props> = memo(
     const flexContent = isSelectOrder 
       ? 'justify-content-around' 
       : 'justify-content-between';
-    const DEFAULT_CONTAINER_STYLES = `border d-flex align-items-center ${flexContent} px-4 py-1 animate__animated animate__fast bg-white rounded`;
+    const DEFAULT_CONTAINER_STYLES = `${styles.container} border d-flex align-items-center gap-5 px-4 py-1 animate__animated animate__fast bg-white rounded`;
 
   
     return (
-      <div 
+      <div
         className={cn(
           DEFAULT_CONTAINER_STYLES, 
-          animateClass, 
+          animateClass,
           { [styles.selectedOrder]: isSelectOrder  === order.id},
           { [styles.arrow_icon]: isSelectOrder },
           { 'pe-5': isSelectOrder },
         )}
       >
-        {!isSelectOrder && <span className='fs-5'>{order.title}</span>}
-        <div className='d-flex align-items-center gap-3'>
-          <div 
-            className="border rounded-circle rounded h-25 p-2 d-flex align-items-center justify-content-center"
-            onClick={() => {
-              if (isSelectOrder !== order.id) {
-                handleSelectProducts(order.id);
-              };
-            }}
-          >
-            <Image 
-              className={styles.icon_button} 
-              src="/list_icon.png" 
-              alt="list icon" 
-              width={20} 
-              height={20}
-            />
+        <div 
+           onClick={() => {
+            if (isSelectOrder !== order.id) {
+              handleSelectProducts(order.id);
+            };
+          }}
+          className={`d-flex align-items-center ${flexContent} flex-grow-1`}
+        >
+          {!isSelectOrder && <span className='fs-5'>{order.title}</span>}
+          <div className='d-flex align-items-center gap-3'>
+            <div 
+              className="border rounded-circle rounded h-25 p-2 d-flex align-items-center justify-content-center"
+            >
+              <Image 
+                className={styles.icon_button} 
+                src="/list_icon.png" 
+                alt="list icon" 
+                width={20} 
+                height={20}
+              />
+            </div>
+    
+            <div>
+            <h6 className='m0'>{order.products.length}</h6>
+              Products
+            </div>
           </div>
-  
-          <div>
-          <h6 className='m0'>{order.products.length}</h6>
-            Products
-          </div>
-        </div>
-  
-        <div className='d-flex flex-column'>
-          <div className='text-center '>
-            <p className='m-0'>
-              {formattedDate1}
-            </p>
-            <p className='m-0'>{formattedDate2}</p>
-          </div>
-        </div>
-  
-        {!isSelectOrder && (
-          <>
+    
+          <div className='d-flex flex-column'>
             <div className='text-center '>
               <p className='m-0'>
-                {USD} $
+                {formattedDate1}
               </p>
-              <p className='m-0'>{UAH} UAH</p>
+              <p className='m-0'>{formattedDate2}</p>
             </div>
+          </div>
+    
+          {!isSelectOrder && (
+              <div className='text-center '>
+                <p className='m-0'>
+                  {USD} $
+                </p>
+                <p className='m-0'>{UAH} UAH</p>
+              </div>
   
-            <Image 
+          )}
+
+        </div>
+        {!isSelectOrder && (
+            <Image
               onClick={handleDelay}
               className={styles.icon_button}
               src="/trash_icon.png" 
-              width={16} 
-              height={16} 
+              width={20} 
+              height={20} 
               alt='trash icon' 
             />
-          </>
         )}
         </div>
     )

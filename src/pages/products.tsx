@@ -12,16 +12,6 @@ export const getStaticProps: GetStaticProps = async ({ locale = 'en' }) => ({
   },
 });
 
-// enum Type {
-//   MONITORS = 'Monitors',
-//   PHONES = 'Phones',
-// }
-
-// enum Specification {
-//   One = 'Specification 1',
-//   Two = 'Specification 2',
-// }
-
 const ProductsPage: NextPage = () => {
   const [productsData, setproductsData] = useState(products)
   const [type, setType] = useState('Monitors');
@@ -36,14 +26,14 @@ const ProductsPage: NextPage = () => {
 
   return (
     <Layout title='Products'>
-      <div className='d-flex gap-5 mb-4'>
+      <div className='d-flex gap-5 mb-4 align-items-center'>
         <h2 className="d-inline align-bottom">
           {translate('products:title')}
         </h2>
 
-        <form className='d-flex gap-4 justify-content-bottom w-100 mt-2'>
+        <form className='d-flex gap-4 w-100 mt-2 align-items-center'>
           <label htmlFor='type' className='col-auto'>
-            Type:
+            {translate('products:type')}:
           </label>
             <select
               id='type'
@@ -55,7 +45,7 @@ const ProductsPage: NextPage = () => {
             </select>
 
           <label htmlFor='specification'>
-            Specification:
+          {translate('products:specification')}:
           </label>
             <select
               id='specification'

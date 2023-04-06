@@ -9,13 +9,15 @@ interface Props {
   product: Product
   isSelectOrder: number | null
   handleDeleteProduct: (productId: number) => void
+  ordertitle?: string | null
 }
 
 const ProductItem: FC<Props> = memo(
   ({ 
     product, 
     isSelectOrder, 
-    handleDeleteProduct, 
+    handleDeleteProduct,
+    ordertitle
   }) => {
     const [isDeleted, setDeleted] = useState(false);
     const dateFrom = product.guarantee.start;
@@ -97,16 +99,20 @@ const ProductItem: FC<Props> = memo(
           </>
         )}
   
-        <span>{getOrder ? getOrder?.title : '-'}</span>
+        <span>
+          {getOrder || ordertitle 
+            ? `${ ordertitle || getOrder?.title }` 
+            : '-'
+        }</span>
   
         <Image 
-              className={styles.delete}
-              src="/trash_icon.png" 
-              width={16} 
-              height={16} 
-              alt='trash icon'
-              onClick={handleDelay}
-            />
+          className={styles.delete}
+          src="/trash_icon.png" 
+          width={16} 
+          height={16} 
+          alt='trash icon'
+          onClick={handleDelay}
+        />
         </div>
     )
   },

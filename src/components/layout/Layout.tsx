@@ -17,7 +17,7 @@ const Layout: FC<PropsWithChildren<Props>> = memo(
         <Header />
         <main className='d-flex'>
           <NavigationMenu />
-          <div className={`w-100 p-5 ${styles.content}`}>
+          <div className={`w-100 ${styles.content}`}>
             { children }
           </div>
         </main>
