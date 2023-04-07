@@ -1,4 +1,4 @@
-# My First Next.js Project
+# Product catalog
 
 [DEMO](https://product-application-official-artem.vercel.app/)
 
