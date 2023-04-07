@@ -9,18 +9,6 @@ const TopMenu: FC = React.memo(
     const [date, setDate] = useState(new Date());
     const { locale } = useRouter();
     const [activeUsers, setActiveUsers] = useState(0);
-
-    useEffect(() => {
-      const socket = io(`https://${process.env.URL}:${process.env.PORT}`, { forceNew: true });
-      socket.on('activeUsers', (data: any) => {
-        console.log(window.location.hostname, process.env.PORT);
-        
-        setActiveUsers(data);
-      });
-      return () => {
-        socket.disconnect();
-      };
-    }, []);
   
     useEffect(() => {
       const interval = setInterval(() => {
@@ -28,6 +16,18 @@ const TopMenu: FC = React.memo(
       }, 1000);
   
       return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+      const socket = io('https://application-socketio-production.up.railway.app/');
+      socket.on('activeUsers', (data: any) => {
+        console.log(data);
+        
+        setActiveUsers(data);
+      });
+      return () => {
+        socket.disconnect();
+      };
     }, []);
   
     const options: Intl.DateTimeFormatOptions = {
@@ -50,15 +50,16 @@ const TopMenu: FC = React.memo(
     }
   
     return (
-      <div className='d-flex align-items-start flex-column p-1'>
-        <p className='m-0'>{capitalize(datOfWeek)}</p>
+      <div className='d-flex align-items-start flex-column'>
+        <span className='m-0'>{capitalize(datOfWeek)}</span>
+        <span>Active users: {activeUsers}</span>
         <div className='d-flex gap-5'>
           <span>{`${day} ${capitalize(month)}, ${year}`}</span>
           <div>
             <Image className='me-2' src="/clock_icon.png" width={16} height={16} alt="clock_icon" />
             <span>{`${date.toLocaleTimeString().slice(0, -3)}`}</span>
 
-            <div>Active users: {activeUsers}</div>
+            
           </div>
         </div>
       </div>
