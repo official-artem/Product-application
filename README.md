@@ -1,6 +1,6 @@
 # My First Next.js Project
 
-[DEMO](https://application-official-artem.vercel.app/orders)
+[DEMO](https://product-application-official-artem.vercel.app/)
 
 
 This is an online application that lets you view orders, add new ones, and see the products in a particular order. You can also view the current time, choose the language, and see how many other people are currently browsing the site. Please note that this project is not built with a responsive layout.
