@@ -23,10 +23,10 @@ const NotFound: NextPage = memo(
             width={400} 
             height={400} 
             alt="in development logo" 
-            className='mb-5 animate__animated animate__fadeInUp' 
+            className='mb-5 animate__animated animate__fadeInLeft' 
           />
           <h1 
-            className="animate__animated animate__fadeInUp"
+            className="animate__animated animate__fadeInLeft"
           >
             {translate('inDevelopment:title')}
                                           </h1>
