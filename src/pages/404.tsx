@@ -18,8 +18,18 @@ const NotFound: NextPage = memo(
     return (
       <Layout title='Page not found'>
         <div className='d-flex align-items-center flex-column'>
-          <Image src="/in_development.png" width={400} height={400} alt="in development logo" className='mb-5' />
-          <h1>{translate('inDevelopment:title')}</h1>
+          <Image 
+            src="/in_development.png" 
+            width={400} 
+            height={400} 
+            alt="in development logo" 
+            className='mb-5 animate__animated animate__fadeInUp' 
+          />
+          <h1 
+            className="animate__animated animate__fadeInUp"
+          >
+            {translate('inDevelopment:title')}
+                                          </h1>
         </div>
       </Layout>
     )
